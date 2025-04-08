@@ -4,7 +4,7 @@ import pandas as pd
 caminho_csv = 'C:/Users/Administrador/Desktop/projetos/dashboard_atendimentos_hsp/dados/dados.csv'
 dados = pd.read_csv(caminho_csv)
 
-# Criar ID de registro para relacionamento entre tabelas
+
 dados['id_registro'] = dados.index + 1
 
 # Converter datas e horas
@@ -13,7 +13,7 @@ dados['data_alta'] = pd.to_datetime(dados['data_alta'] + ' ' + dados['hora_fim']
 dados['data'] = pd.to_datetime(dados['data_atendimento']).dt.date
 
 
-# Arredondar hora para facilitar agrupamento
+# Arredondar hora 
 dados['hora_inicio_arred'] = dados['data_atendimento'].dt.floor('h').dt.strftime('%H:00')
 dados['hora_fim_arred'] = dados['data_alta'].dt.floor('h').dt.strftime('%H:00')
 
@@ -71,11 +71,10 @@ Atendimentos = [
 
 dados_atendimentos = dados[Atendimentos]
 
-
 print(dados_atendimentos)
 
 
-# Salvar tudo no Excel
+
 caminho_saida_xlsx = 'C:/Users/Administrador/Desktop/projetos/dashboard_atendimentos_hsp/dados/dados.xlsx'
 with pd.ExcelWriter(caminho_saida_xlsx, engine='openpyxl') as writer:
     dados_atendimentos.to_excel(writer, sheet_name='Dados Transformados', index=False)
